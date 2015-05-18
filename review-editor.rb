@@ -16,7 +16,7 @@ class ReviewEditorController
   fxml "review-editor.fxml"
 
   def compile
-    compiled = ReviewEditor.new.compile(@input.getText)
+    compiled = $review_editor.compile(@input.getText)
     @output.getEngine.loadContent(compiled)
   end
 end
@@ -49,5 +49,7 @@ class ReviewEditor
     ""
   end
 end
+
+$review_editor = ReviewEditor.new
 
 ReviewEditorApp.launch
