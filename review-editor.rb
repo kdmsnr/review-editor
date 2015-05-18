@@ -16,10 +16,34 @@ class ReviewEditorController
   fxml "review-editor.fxml"
 
   def compile
+    @error.setVisible(false)
     compiled = $review_editor.compile(@input.getText)
     @output.getEngine.loadContent(compiled)
+  rescue => e
+    @error.setVisible(true)
+    # @error.setText(e.to_s)
+    @error.setText($stderr.read)
   end
 end
+
+class MyStdError
+  def initialize
+    @err = ''
+  end
+
+  def write
+  end
+
+  def puts(str)
+    @err = str
+  end
+
+  def read
+    @err
+  end
+end
+
+$stderr = MyStdError.new
 
 $LOAD_PATH << "review/lib"
 require 'review'
@@ -45,8 +69,6 @@ class ReviewEditor
     else
       ""
     end
-  rescue
-    ""
   end
 end
 
