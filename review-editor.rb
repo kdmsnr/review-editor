@@ -1,5 +1,9 @@
 require 'jrubyfx'
-fxml_root File.dirname(__FILE__)
+if JRubyFX::Application.in_jar?
+  fxml_root nil, "review-editor.jar"
+else
+  fxml_root File.dirname(__FILE__)
+end
 
 class ReviewEditorApp < JRubyFX::Application
   def start(stage)
