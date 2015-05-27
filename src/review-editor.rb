@@ -28,6 +28,55 @@ class ReviewEditorController
     # @error.setText(e.to_s)
     @error.setText($stderr.read)
   end
+
+  def key(e)
+    if e.isControlDown
+      case e.getCode.getName
+      when "F"
+        @input.fireEvent(KeyEvent.new(KeyEvent::KEY_PRESSED, "", "",
+            KeyCode::RIGHT, false, false, false, false))
+        e.consume
+      when "B"
+        @input.fireEvent(KeyEvent.new(KeyEvent::KEY_PRESSED, "", "",
+            KeyCode::LEFT, false, false, false, false))
+        e.consume
+      when "N"
+        @input.fireEvent(KeyEvent.new(KeyEvent::KEY_PRESSED, "", "",
+            KeyCode::DOWN, false, false, false, false))
+        e.consume
+      when "P"
+        @input.fireEvent(KeyEvent.new(KeyEvent::KEY_PRESSED, "", "",
+            KeyCode::UP, false, false, false, false))
+        e.consume
+      when "E"
+        @input.fireEvent(KeyEvent.new(KeyEvent::KEY_PRESSED, "", "",
+            KeyCode::END, false, false, false, false))
+        e.consume
+      when "A"
+        @input.fireEvent(KeyEvent.new(KeyEvent::KEY_PRESSED, "", "",
+            KeyCode::HOME, false, false, false, false))
+        e.consume
+      when "K"
+        @input.fireEvent(KeyEvent.new(KeyEvent::KEY_PRESSED, "", "",
+            KeyCode::END, false, false, false, false))
+        @input.fireEvent(KeyEvent.new(KeyEvent::KEY_RELEASED, "", "",
+            KeyCode::END, false, false, false, false))
+        @input.copy
+        @input.fireEvent(KeyEvent.new(KeyEvent::KEY_PRESSED, "", "",
+            KeyCode::DELETE, false, false, false, false))
+        e.consume
+      when "Y"
+        @input.paste
+        e.consume
+      end
+    elsif e.isAltDown
+      case e.getCode.getName
+      when "W"
+        @input.copy
+        e.consume
+      end
+    end
+  end
 end
 
 class MyStdError
